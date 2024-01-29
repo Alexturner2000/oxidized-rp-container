@@ -21,8 +21,8 @@ services:
       oxidized_network:
         ipv4_address: 172.30.1.3
     dns:
-      - {use.your.internal.DNS}
-    dns_search: {useyourinternalDNS.com}
+      - sampleDNS
+    dns_search: sampleDNS.com
     logging:
       options:
         max-size: 50m
