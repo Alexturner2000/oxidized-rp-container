@@ -1,0 +1,62 @@
+---
+username: sampleUser
+password: samplePassword
+model: powerconnect
+resolve_dns: true
+interval: 3600
+use_syslog: true
+debug: false
+threads: 30
+use_max_threads: false
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+rest: 0.0.0.0:8888
+next_adds_job: false
+vars: {
+  enable: samplePassword }
+groups: {}
+group_map: {}
+models: {}
+pid: "/home/oxidized/.config/oxidized/pid"
+crash:
+  directory: "/home/oxidized/.config/oxidized/crashes"
+  hostnames: false
+stats:
+  history_size: 10
+input:
+  default: ssh
+  debug: true
+  ssh:
+    secure: false
+    ssh_keys: /root/.ssh/id_rsa
+  ftp:
+    passive: true
+  utf8_encoded: true
+output:
+  default: git
+  git:
+    user: sampleUser
+    email: sampleUser@sample.com
+    repo: "/home/oxidized/.config/oxidized/switch-backups"
+source:
+  default: csv
+  csv:
+    file: "~/.config/oxidized/router.db"
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      username: 2
+      password: 3
+    vars_map:
+      enable: 4
+model_map:
+  dell: powerconnect
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: "git@sample.sample.com:oxidized/switch-backups.git"
+    publickey: /root/.ssh/id_rsa.pub
+    privatekey: /root/.ssh/id_rsa
